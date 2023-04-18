@@ -1,0 +1,172 @@
+body{
+    height: 100vh;
+    margin-top: 7rem;
+    font-family: sans-serif;
+}
+.optionBtn{
+    height: 10rem;
+    width: 12rem;
+    box-shadow: 5px 5px 5px 1px black;
+    margin: .4rem;
+}
+.optionImg{
+    width: 100%;
+    height: 100%;
+}
+#paperBtn{
+    width: 13rem;
+}
+.optionBtn:hover{
+    scale: 0.985;
+}
+.headLineDiv{
+    display: flex;
+}
+#main{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+.RulesAndHeadLineDiv{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+.headLine{
+    text-align: center;
+}
+ul{
+    list-style: none;
+}
+.topList{
+    display: flex;
+    justify-content:space-around;
+}
+.usrNameItem{
+    display: flex;
+    position: relative;
+    top: 50vh;
+    margin: .5rem;
+}
+.displayDiv, .displayDiv div{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem;
+}
+.displayDiv div{
+    flex-flow: column wrap;
+    width: 15rem;
+    height: 20rem;
+}
+.displayDiv{
+    text-align: center;
+}
+.buttonsForm{
+    display: flex;
+    justify-content: center;
+}
+*,*:before,*:after {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+#getUsrNameForm {
+    position: relative;
+    top: 25%;
+    width: max-content;
+    margin: 40px auto;
+    font-family: "Segoe UI", sans-serif;
+    padding: 25px 28px;
+    background: #151414;
+    border-radius: 4px;
+    border: 1px solid #302d2d;
+    animation: popup 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes popup {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    font-weight: 400;
+    color: #e7e7e7;
+}
+.input-parent {
+    display: block;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #a4a4a4;
+}
+.input-parent input {
+    padding: 10px 8px;
+    width: 100%;
+    font-size: 16px;
+    background: #323131;
+    border: none;
+    color: #c7c7c7;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+.input-parent input:hover {
+    background: #404040;
+}
+.input-parent input:focus {
+    box-shadow: 0px 0px 0px 1px #0087ff;
+}
+.usrNameSubmit {
+    padding: 10px 18px;
+    font-size: 15px;
+    background: #1a3969;
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    color: #f4f4f4;
+    transition: all 0.2s ease;
+}
+.usrNameSubmit:hover {
+    opacity: 0.9;
+}
+.usrNameSubmit:focus {
+    box-shadow: 0px 0px 0px 3px black;
+}
+
+header img {
+    height: 80px;
+    margin-left: 40px;
+}
+header {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    box-shadow: 0 0 25px 0 black;
+}
+header * {
+    display: inline;
+}
+header li {
+    margin: 20px;
+}
+header li p {
+    color: black;
+    text-decoration: none;
+}
