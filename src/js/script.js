@@ -141,7 +141,7 @@ buttonsForm.addEventListener("submit", (event) => {
      
 
     //need to have switch here with
-    const urlForScissors = new URL("media/scissor.png",  import.meta.url)
+    const urlForScissors = new URL("../media/scissor.png",  import.meta.url)
 
 
     //changes the displayUsrImg src 
