@@ -1,5 +1,24 @@
 //imports the constants that are used in script.js
 
+//TODO ask teacher on how to use search paths so they work
+//TODO ask teacher to explain async await fetch
+//TODO ask if scoreboard can have negatie numbers, instead of being empty
+
+
+//Användaren ska välja sten, sax, eller påse genom att klicka på ett val.
+//rock paper lizard spock
+
+
+//I firebase ska det finnas en lista på topp 5 scores
+//kan alla scores finnas där, och man visar bara de fem högsta?
+
+
+
+
+
+// topzzz lid
+
+
 import{ 
     navbarHeader 
 }from "./header.js" 
@@ -34,11 +53,17 @@ import{
 }from "./displayDiv.js" 
 
 import{
-    sortedScores
+    highScoreDiv
+}from './highScore.js'
+
+import{
+    fetchAndSortScores
 }from "./firebase.js"
  
 
-
+let scores = await fetchAndSortScores()
+console.log("sorted scores:")
+console.log(scores);
 
 
 
@@ -54,8 +79,7 @@ let round = 0
 let usrChosenOption = "" 
  
 //used to store what the computer has chosen as their weapon 
-let computerChosenOption = "" 
-
+let computerChosenOption = "" ;
 
 
 
@@ -78,12 +102,16 @@ getUsrNameButton.addEventListener("click" , (event) => {
  
     //adds the navbar 
     document.body.append(navbarHeader) 
- 
+
+
     //adds the rules 
     document.body.append(RulesAndHeadLineDiv) 
  
     //adds the buttons 
     document.body.append(buttonsDiv) 
+
+    document.body.append(highScoreDiv)
+
  
     //adds the usrName to the navbar 
     document.querySelector(".navUsrName").innerText += usrName 
@@ -111,11 +139,21 @@ buttonsForm.addEventListener("submit", (event) => {
     //logs the value of the button pressed 
     console.log(`Users Chosen option is = ${usrChosenOption}`) 
      
+
+    //need to have switch here with
+    const urlForScissors = new URL("media/scissor.png",  import.meta.url)
+
+
     //changes the displayUsrImg src 
     displayUsrImg.src = optionCorelation[usrChosenOption].location 
  
     //changes the displayComputerImg src 
     displayComputerImg.src = optionCorelation[computerChosenOption].location 
+
+
+
+
+
  
     //changes the displayMidde 
     displayMiddleH3.innerText = optionCorelation[usrChosenOption][computerChosenOption].explanation 
@@ -146,7 +184,7 @@ buttonsForm.addEventListener("submit", (event) => {
     } 
      
     //checks if usr has won or lost three times 
-    if(wins == 3 || losses == 3){ 
+   /*  if(wins == 3 || losses == 3){ 
         if(wins == 3){ 
             window.alert("WINNER WINNER CHICKEN DINNER!!!") 
         }else{ 
@@ -160,7 +198,7 @@ buttonsForm.addEventListener("submit", (event) => {
         losses = 0 
         ties = 0 
         round = 0 
-    } 
+    }  */
  
     //updates the variables in the navbar 
     updateNavBar(usrName, wins, losses, ties, round) 
