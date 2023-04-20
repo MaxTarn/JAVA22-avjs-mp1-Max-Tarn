@@ -5,7 +5,14 @@ const arrOfImgLocation = [
     "media/scissor.png",  
     "media/lizard.png",  
     "media/spock.png"  
-    ] 
+] 
+const arrOfImgUrl = [
+    new URL("../media/rock.png", import.meta.url),
+    new URL("../media/paper.png", import.meta.url),
+    new URL("../media/scissor.png", import.meta.url),
+    new URL("../media/lizard.png", import.meta.url),
+    new URL("../media/spock.png", import.meta.url)
+]
 
 
     
@@ -21,7 +28,7 @@ optionCorelation[usrChosenOption][computerChosenOption].explanation     will be 
 objects in optionCorelation is named the same as the diffrent values of the buttons */
 export const optionCorelation = { 
     rock:{ 
-        location: arrOfImgLocation[0], 
+        location: arrOfImgUrl[0], 
         rock:{ 
             outcome: "tie", 
             explanation: printThisWhenTied 
@@ -44,7 +51,7 @@ export const optionCorelation = {
         } 
     }, 
     paper:{ 
-        location: arrOfImgLocation[1], 
+        location: arrOfImgUrl[1], 
         rock:{ 
             outcome: "win", 
             explanation: "Paper covers rock" 
@@ -67,7 +74,7 @@ export const optionCorelation = {
         } 
     }, 
     scissor:{ 
-        location:arrOfImgLocation[2], 
+        location:arrOfImgUrl[2], 
         rock:{ 
             outcome: "loss", 
             explanation: "Rock crushes scissors" 
@@ -90,7 +97,7 @@ export const optionCorelation = {
         } 
     },  
     lizard:{ 
-        location: arrOfImgLocation[3], 
+        location: arrOfImgUrl[3], 
         rock:{ 
             outcome: "loss", 
             explanation: "Rock crushes lizard" 
@@ -113,7 +120,7 @@ export const optionCorelation = {
         } 
     }, 
     spock:{ 
-        location: arrOfImgLocation[4], 
+        location: arrOfImgUrl[4], 
         rock:{ 
             outcome: "win", 
             explanation: "Spock vaporizes rock" 
@@ -134,6 +141,7 @@ export const optionCorelation = {
             outcome: "tie", 
             explanation: printThisWhenTied 
         } 
-    } 
+    },
+    diagramURL : new URL("../media/RockPaperScissorsLizardSpock.jpg", import.meta.url)
 } 
  

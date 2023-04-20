@@ -170,3 +170,45 @@ header li p {
     color: black;
     text-decoration: none;
 }
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    max-width: 30%;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+}
+#high-score-div{
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.styled-table thead tr {
+    background-color: #193560;
+    color: #ffffff;
+}
+.styled-table th,
+.styled-table td {
+    padding: 8px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 1.5px solid #193560;
+    
+}
+
+
+
+

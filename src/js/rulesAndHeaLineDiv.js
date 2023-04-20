@@ -1,3 +1,8 @@
+import{
+    //used for the diagram URL
+    optionCorelation
+}from './optionCorelation.js'
+
 //export thing(s) will only be used in script.js
 
 export const RulesAndHeadLineDiv = document.createElement("div")
@@ -13,7 +18,7 @@ HeadLineH1.innerText = "Rules of the game:"
 
 
 const GameRulesImg = document.createElement("img")
-GameRulesImg.src = "media/RockPaperScissorsLizardSpock.jpg"
+GameRulesImg.src = optionCorelation.diagramURL
 GameRulesImg.alt = "diagrm of rock paper scissor lizard spock"
 GameRulesImg.id = "gameRulesImg"
 

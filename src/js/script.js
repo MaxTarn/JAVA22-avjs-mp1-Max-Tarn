@@ -1,23 +1,5 @@
-//imports the constants that are used in script.js
 
-//TODO ask teacher on how to use search paths so they work
-//TODO ask teacher to explain async await fetch
-//TODO ask if scoreboard can have negatie numbers, instead of being empty
-
-
-//Användaren ska välja sten, sax, eller påse genom att klicka på ett val.
-//rock paper lizard spock
-
-
-//I firebase ska det finnas en lista på topp 5 scores
-//kan alla scores finnas där, och man visar bara de fem högsta?
-
-
-
-
-
-// topzzz lid
-
+//--------------- IMPORTS ---------------
 
 import{ 
     navbarHeader 
@@ -53,17 +35,17 @@ import{
 }from "./displayDiv.js" 
 
 import{
-    highScoreDiv
+    highScoreDiv,
+    updateHighScore,
 }from './highScore.js'
 
 import{
-    fetchAndSortScores
+    putScores,
+    resetScores
 }from "./firebase.js"
  
 
-let scores = await fetchAndSortScores()
-console.log("sorted scores:")
-console.log(scores);
+//------------- IMPORTS END -------------
 
 
 
@@ -71,8 +53,6 @@ console.log(scores);
 //variables that will be show in the navbar 
 let usrName = "" 
 let wins = 0 
-let losses = 0 
-let ties = 0 
 let round = 0 
  
 //used to store what the user has chosen as their weapon 
@@ -103,16 +83,12 @@ getUsrNameButton.addEventListener("click" , (event) => {
     //adds the navbar 
     document.body.append(navbarHeader) 
 
-
     //adds the rules 
     document.body.append(RulesAndHeadLineDiv) 
  
     //adds the buttons 
     document.body.append(buttonsDiv) 
 
-    document.body.append(highScoreDiv)
-
- 
     //adds the usrName to the navbar 
     document.querySelector(".navUsrName").innerText += usrName 
      
@@ -124,6 +100,22 @@ buttonsForm.addEventListener("submit", (event) => {
     //no reloading the page 
     event.preventDefault() 
  
+    //gets the highScoreDiv from DOM
+    const highScoreDivInDOM = document.querySelector('#high-score-div')
+
+    //checks if highScoreDiv has alredy been added to the DOM
+    if(highScoreDivInDOM !== null){
+
+        //adds the high score table to the DOM
+        document.body.append(highScoreDiv)
+
+    }
+    //adds the high score table to the DOM
+    document.body.append(highScoreDiv)
+
+    //fetches and updates the scores in highScoreDiv
+    updateHighScore()
+
     //removes RulesAndHeadLineDiv from the DOM 
     RulesAndHeadLineDiv.remove() 
  
@@ -135,26 +127,16 @@ buttonsForm.addEventListener("submit", (event) => {
  
     //randomly chooses a option for computer
     computerChosenOption = randomOption() 
- 
+
     //logs the value of the button pressed 
     console.log(`Users Chosen option is = ${usrChosenOption}`) 
      
-
-    //need to have switch here with
-    const urlForScissors = new URL("../media/scissor.png",  import.meta.url)
-
-
     //changes the displayUsrImg src 
     displayUsrImg.src = optionCorelation[usrChosenOption].location 
  
     //changes the displayComputerImg src 
     displayComputerImg.src = optionCorelation[computerChosenOption].location 
 
-
-
-
-
- 
     //changes the displayMidde 
     displayMiddleH3.innerText = optionCorelation[usrChosenOption][computerChosenOption].explanation 
  
@@ -166,47 +148,61 @@ buttonsForm.addEventListener("submit", (event) => {
         displayMiddleH1.innerText = "LOSER!" 
         displayComputerH1.style.color = "green"         
         displayUsrH1.style.color = "red" 
-        losses++ 
- 
+
+        //sends the acheived score to the database if it is more than the lowest highscore
+        sendScores(wins, usrName)
+
+        //resets the game variables
+        wins = 0
+        round = 0
+
+
         //if usr has won 
     }else if(outCome == "win"){ 
         displayMiddleH1.innerText = "WINNER!" 
         displayUsrH1.style.color = "green" 
         displayComputerH1.style.color = "red" 
         wins++ 
- 
+
+    
         //if usr is tied with computer 
     }else if(outCome == "tie"){ 
         displayMiddleH1.innerText = "TIE!" 
         displayUsrH1.style.color = "black" 
-        displayComputerH1.style.color = "black" 
-        ties++ 
+        displayComputerH1.style.color = "black"
+        
+        //sends the acheived score to the database if it is more than the lowest highscore
+        sendScores(wins, usrName)
+
+        //resets the game variables
+        wins = 0
+        round = 0
     } 
      
-    //checks if usr has won or lost three times 
-   /*  if(wins == 3 || losses == 3){ 
-        if(wins == 3){ 
-            window.alert("WINNER WINNER CHICKEN DINNER!!!") 
-        }else{ 
-            window.alert("HAHA!! LOSER! LOOOOOOOSER!!") 
-        } 
-        displayMiddleH1.innerText = "To keep playing: choose your weapon" 
-        displayMiddleH3.innerText = "" 
-         
-        //resets the variables in the navbar 
-        wins = 0 
-        losses = 0 
-        ties = 0 
-        round = 0 
-    }  */
- 
     //updates the variables in the navbar 
-    updateNavBar(usrName, wins, losses, ties, round) 
+    updateNavBar(usrName, wins,round) 
  
+    
     //adds the displayDiv to DOM 
     document.body.prepend(displayDiv) 
+    
+    //updates the shown scores
+    
+    
 }) 
- 
+
+//when clicked resets all points to 0
+highScoreDiv.querySelector("#reset-scores").addEventListener(('click'), event =>{
+
+    //sends negative scores to the database, when scores have been sent, the score board is updated
+    resetScores().then((response)=>{
+        updateHighScore()
+    })
+
+
+})
+
+
  
  
 //---------- EVENTLISTENER END---------- 
@@ -217,8 +213,23 @@ buttonsForm.addEventListener("submit", (event) => {
  
  
 //---------------------------------------- ONLY FUNCTIONS BELOW THIS----------------------------------------- 
- 
- 
+
+//sends the acheived score to the database, 
+//if the acheived is lower than the lowest score in the database => nothing happens
+function sendScores(wins, usrName){
+
+    //a post that could be added to the database
+    const newScore =  {
+        score : wins,
+        userName : usrName
+    }
+
+    //if the score is bigger than the smallest score, it adds newScore to the database
+    putScores(newScore).then(()=>{
+        updateHighScore()
+    })
+}
+
 //returns one of the five options as a string, randomized 
 function randomOption(){ 
     let ranValue = getRandomValueBetween(1,5) 
@@ -247,11 +258,9 @@ function randomOption(){
 } 
  
 //updates the variables show in the navbar 
-function updateNavBar(usrName, wins, losses, ties, round){ 
+function updateNavBar(usrName, wins, round){ 
     document.querySelector(".navUsrName").innerText = `UserName: ${usrName}` 
-    document.querySelector(".navWins").innerText = `Wins: ${wins}` 
-    document.querySelector(".navLosses").innerText = `Losses: ${losses}` 
-    document.querySelector(".navTies").innerText = `Ties: ${ties}` 
+    document.querySelector(".navWins").innerText = `Wins: ${wins}`  
     document.querySelector(".navRound").innerText = `Round: ${round}` 
 } 
  

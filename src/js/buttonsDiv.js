@@ -1,3 +1,8 @@
+
+import{
+    //used for the URL of the difrent imgs
+    optionCorelation
+}from './optionCorelation.js'
 //export thing(s) will only be used in script.js
 
 export const buttonsDiv = document.createElement("div")
@@ -23,7 +28,7 @@ RockButton.name = "chosenOption"
 RockButton.value = "rock"
 const RockImg = document.createElement("img")
 RockImg.className = "optionImg"
-RockImg.src = "media/rock.png"
+RockImg.src = optionCorelation.rock.location
 
 
 const PaperButton = document.createElement("button")
@@ -32,7 +37,7 @@ PaperButton.name = "chosenOption"
 PaperButton.value = "paper"
 const PaperImg = document.createElement("img")
 PaperImg.className = "optionImg"
-PaperImg.src = "media/paper.png"
+PaperImg.src = optionCorelation.paper.location
 
 
 const ScissorButton = document.createElement("button")
@@ -41,7 +46,7 @@ ScissorButton.name = "chosenOption"
 ScissorButton.value = "scissor"
 const ScissorImg = document.createElement("img")
 ScissorImg.className = "optionImg"
-ScissorImg.src = "media/scissor.png"
+ScissorImg.src = optionCorelation.scissor.location
 
 
 const LizardButton = document.createElement("button")
@@ -50,7 +55,7 @@ LizardButton.name = "chosenOption"
 LizardButton.value = "lizard"
 const LizardImg = document.createElement("img")
 LizardImg.className = "optionImg"
-LizardImg.src = "media/lizard.png"
+LizardImg.src = optionCorelation.lizard.location
 
 
 const SpockButton = document.createElement("button")
@@ -59,7 +64,7 @@ SpockButton.name = "chosenOption"
 SpockButton.value = "spock"
 const SpockImg = document.createElement("img")
 SpockImg.className = "optionImg"
-SpockImg.src = "media/spock.png"
+SpockImg.src = optionCorelation.spock.location
 
 //CREATING THE BUTTONS END
 
