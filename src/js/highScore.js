@@ -14,4 +14,5 @@ for (let index = 0; index <= 4; index++) {
     highScoreList.append(li)
 }
 
+
 highScoreDiv.append(highScoreList)
